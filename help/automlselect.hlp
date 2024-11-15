@@ -1,0 +1,87 @@
+. AutoMLSelect
+
+AutoMLSelect is a Stata package that automates the selection and execution of regression or classification models based on user input. It evaluates multiple models and selects the best-performing one based on appropriate performance metrics.
+
+SYNTAX
+    automlselect using <filepath>, ///
+        NumCols("<numerical_columns>") ///
+        CatCols("<categorical_columns>") ///
+        Target("<target_column>") ///
+        Task("<regression/classification>") ///
+        OutputPred("<output_predictions_path>") ///
+        OutputCoeff("<output_coefficients_path>") ///
+        OutputMetrics("<output_metrics_path>")
+
+DESCRIPTION
+    AutoMLSelect simplifies the process of model selection by automating the evaluation of multiple regression or classification models. Users can specify their dataset, select relevant numerical and categorical predictors, define the target variable, and choose the task type. The package then runs the appropriate models, evaluates their performance, and outputs the best-performing model along with predictions, coefficients, and evaluation metrics.
+
+INPUT PARAMETERS
+    using
+        (required) The path to the dataset file in Stata .dta format.
+
+    NumCols(string)
+        (required) A space-separated list of numerical column names to be used as predictors in the model.
+
+    CatCols(string)
+        (required) A space-separated list of categorical column names to be used as predictors in the model.
+
+    Target(string)
+        (required) The column name representing the dependent variable to be predicted.
+
+    Task(string)
+        (required) The type of analysis to perform. Acceptable values:
+            - "regression" for predicting a continuous variable.
+            - "classification" for predicting a binary categorical variable.
+
+    OutputPred(string)
+        (required) The file path where prediction results will be saved.
+
+    OutputCoeff(string)
+        (required) The file path where model coefficients will be saved.
+
+    OutputMetrics(string)
+        (required) The file path where evaluation metrics will be saved.
+
+OUTPUT
+    - Predictions: The predicted values from the best-performing model.
+    - Model Coefficients: Coefficients of the best model.
+    - Evaluation Metrics: Performance metrics such as R² for regression or accuracy for classification.
+
+EXAMPLES
+    * Example 1: Regression Task
+    automlselect using "data/sample_regression_data.dta", ///
+        NumCols("Size Bedrooms Age") ///
+        CatCols("Location") ///
+        Target("Price") ///
+        Task("regression") ///
+        OutputPred("results/predictions_reg.dta") ///
+        OutputCoeff("results/coefficients_reg.csv") ///
+        OutputMetrics("results/metrics_reg.csv")
+
+    * Example 2: Classification Task
+    automlselect using "data/sample_classification_data.dta", ///
+        NumCols("Age Income") ///
+        CatCols("Gender Region") ///
+        Target("Purchase") ///
+        Task("classification") ///
+        OutputPred("results/predictions_clas.dta") ///
+        OutputCoeff("results/coefficients_clas.csv") ///
+        OutputMetrics("results/metrics_clas.csv")
+
+OUTPUT INTERPRETATION
+    - Predictions: Contains the predicted values or classifications based on the best model.
+    - Coefficients: Displays the relationship between each predictor and the target variable.
+    - Metrics: Shows the performance of the best model. For regression, R² indicates the proportion of variance explained. For classification, accuracy indicates the proportion of correct predictions.
+
+TROUBLESHOOTING
+    - "Error: File does not exist." Ensure the file path is correct.
+    - "Error: Variable does not exist." Check that all specified column names are correct.
+    - "Error: Dataset contains missing values." Clean the dataset to remove or impute missing values before using the package.
+    - "Error: For classification, the target variable must be binary." Ensure that the target variable has exactly two categories.
+
+SUPPORT
+    For further assistance, contact the package maintainer or refer to the documentation.
+
+AUTHOR
+    Developed by [Your Name], 2024.
+
